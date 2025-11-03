@@ -1,0 +1,92 @@
+.container
+  max-width: 800px
+  margin: 0 auto
+  padding: 2rem
+  background: #f9fafb
+  border-radius: 12px
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1)
+
+.title
+  font-size: 1.75rem
+  font-weight: 600
+  margin-bottom: 0.5rem
+  color: #111
+
+.description
+  font-size: 0.95rem
+  color: #666
+  margin-bottom: 1.5rem
+  line-height: 1.5
+
+.inputGroup,
+.outputGroup
+  margin-bottom: 1.5rem
+
+.label
+  display: block
+  font-weight: 500
+  font-size: 0.9rem
+  color: #444
+  margin-bottom: 0.5rem
+
+.textarea
+  width: 100%
+  padding: 0.75rem
+  font-size: 1rem
+  font-family: inherit
+  border: 2px solid #ddd
+  border-radius: 8px
+  resize: vertical
+  transition: border-color 0.2s ease
+
+  &:focus
+    outline: none
+    border-color: #667eea
+
+  &::placeholder
+    color: #999
+
+.buttonGroup
+  display: flex
+  gap: 1rem
+  margin-bottom: 1.5rem
+
+.button,
+.buttonSecondary
+  padding: 0.75rem 1.5rem
+  font-size: 1rem
+  font-weight: 500
+  border: none
+  border-radius: 8px
+  cursor: pointer
+  transition: all 0.2s ease
+
+.button
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
+  color: white
+
+  &:hover
+    transform: translateY(-2px)
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4)
+
+  &:active
+    transform: translateY(0)
+
+.buttonSecondary
+  background: #e5e7eb
+  color: #374151
+
+  &:hover
+    background: #d1d5db
+
+.output
+  padding: 1rem
+  font-size: 1rem
+  background: white
+  border: 2px solid #667eea
+  border-radius: 8px
+  min-height: 100px
+  color: #333
+  line-height: 1.6
+  white-space: pre-wrap
+  word-break: break-word
