@@ -36,6 +36,7 @@
     "eslint": "^9",
     "eslint-config-next": "^15.1.4",
     "sass": "^1.83.0",
+    "vercel": "^37",
     "wrangler": "^3"
   }
 }
