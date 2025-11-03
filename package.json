@@ -15,12 +15,12 @@
     "pages:dev": "npx @cloudflare/next-on-pages --watch"
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "^15.1.4",
-    "gsap": "^3.12.5",
+    "@supabase/supabase-js": "^2.39.0",
     "aws-sdk": "^2.1691.0",
-    "@supabase/supabase-js": "^2.39.0"
+    "gsap": "^3.12.5",
+    "next": "^15.1.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1",
@@ -28,15 +28,16 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "^15.1.4",
     "jest": "^29",
     "jest-environment-jsdom": "^29",
+    "sass": "^1.83.0",
     "ts-jest": "^29",
     "ts-node": "^10",
     "typescript": "^5",
-    "eslint": "^9",
-    "eslint-config-next": "^15.1.4",
-    "sass": "^1.83.0",
     "vercel": "^37",
     "wrangler": "^3"
-  }
+  },
+  "packageManager": "yarn@4.10.3"
 }
