@@ -20,7 +20,8 @@
     "gsap": "^3.12.5",
     "next": "^15.1.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "vercel": "^37"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1",
@@ -36,7 +37,6 @@
     "ts-jest": "^29",
     "ts-node": "^10",
     "typescript": "^5",
-    "vercel": "^37",
     "wrangler": "^3"
   },
   "packageManager": "yarn@4.9.1"
