@@ -1,5 +1,6 @@
 import AnimatedHero from '@/components/AnimatedHero';
 import WordReverser from '@/components/WordReverser';
+import ReversedTextHistory from '@/components/ReversedTextHistory';
 import styles from './page.module.sass';
 
 export default function Home() {
@@ -16,10 +17,14 @@ export default function Home() {
           <li>SASS for styling</li>
           <li>AWS Lambda integration</li>
           <li>CloudFlare deployment ready</li>
+          <li>Supabase database integration</li>
         </ul>
       </section>
       <section className={styles.demoSection}>
         <WordReverser />
+      </section>
+      <section className={styles.demoSection}>
+        <ReversedTextHistory />
       </section>
     </main>
   );
