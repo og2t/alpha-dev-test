@@ -8,15 +8,14 @@
   "kv_namespaces": [
     {
       "binding": "NEXT_CACHE_WORKERS_KV",
-      "id": "YOUR_KV_NAMESPACE_ID",
-      "preview_id": "YOUR_PREVIEW_KV_NAMESPACE_ID"
+      "preview_id": "97031a1d95f14e819c3bfa145f68adb5"
     }
   ],
 
   // Environment variables
   "vars": {
-    "NEXT_PUBLIC_SUPABASE_URL": "",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": ""
+    "NEXT_PUBLIC_SUPABASE_URL": "https://leegjayfhtemvzfeiazd.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlZWdqYXlmaHRlbXZ6ZmVpYXpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNzA3NzYsImV4cCI6MjA3Nzc0Njc3Nn0.2k_SjMTGmdTBmSbUY17DZgXyqyhH2GEOKQfvh8_GRmo"
   },
 
   // Secrets (set via: wrangler secret put <NAME>)
