@@ -10,11 +10,14 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "pages:deploy": "npm run pages:build && wrangler pages deploy",
-    "pages:dev": "npx @cloudflare/next-on-pages --watch"
+    "cf:build": "opennextjs-cloudflare",
+    "cf:preview": "npm run cf:build && wrangler dev",
+    "cf:deploy": "npm run cf:build && wrangler deploy",
+    "pages:build": "opennextjs-cloudflare",
+    "pages:deploy": "npm run pages:build && wrangler deploy"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^0.3.0",
     "@supabase/supabase-js": "^2.39.0",
     "aws-sdk": "^2.1691.0",
     "gsap": "^3.12.5",
@@ -23,7 +26,6 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1",
     "@types/jest": "^29",
     "@types/node": "^22",
     "@types/react": "^19",
@@ -36,12 +38,7 @@
     "ts-jest": "^29",
     "ts-node": "^10",
     "typescript": "^5",
-    "wrangler": "^3"
-  },
-  "peerDependenciesMeta": {
-    "vercel": {
-      "optional": true
-    }
+    "wrangler": "^3.99.0"
   },
   "packageManager": "yarn@4.9.1"
 }

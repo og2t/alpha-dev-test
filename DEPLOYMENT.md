@@ -114,88 +114,99 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## CloudFlare Pages Deployment
+## CloudFlare Deployment (Workers/Pages)
+
+This project uses **OpenNext** for CloudFlare deployment, which supports the latest Next.js features and runs on CloudFlare Workers.
 
 ### Prerequisites
 
-- GitHub account
-- Your code pushed to a GitHub repository
-- CloudFlare account
+- GitHub account (for automatic deployments) OR
+- CloudFlare account with Wrangler CLI
 
-### Step 1: Push Your Code to GitHub
+### Method 1: Direct Deploy with Wrangler (Recommended)
+
+**Step 1: Install Dependencies**
 
 ```bash
-git add .
-git commit -m "Add Supabase integration"
-git push origin main
+yarn install
 ```
 
-### Step 2: Connect to CloudFlare Pages
+**Step 2: Create KV Namespace (for caching)**
 
-1. Go to [https://dash.cloudflare.com](https://dash.cloudflare.com)
-2. Log in to your CloudFlare account
-3. Click **Pages** in the sidebar
-4. Click **Create a project**
-5. Click **Connect to Git**
-
-### Step 3: Select Your Repository
-
-1. Choose **GitHub**
-2. Authorize CloudFlare to access your GitHub
-3. Select your repository (`og2t/alpha-dev-test`)
-4. Click **Begin setup**
-
-### Step 4: Configure Build Settings
-
-**Framework preset:** `Next.js`
-
-**Build command:**
 ```bash
-npx @cloudflare/next-on-pages
+# Create KV namespace
+wrangler kv namespace create NEXT_CACHE_WORKERS_KV
+
+# Create preview namespace
+wrangler kv namespace create NEXT_CACHE_WORKERS_KV --preview
 ```
 
-**Build output directory:**
+This will output IDs like:
 ```
-.vercel/output/static
+{ binding = "NEXT_CACHE_WORKERS_KV", id = "abc123..." }
+{ binding = "NEXT_CACHE_WORKERS_KV", preview_id = "xyz789..." }
 ```
 
-**Root directory:** (leave blank)
+**Step 3: Update wrangler.jsonc**
 
-### Step 5: Set Environment Variables
+Replace the placeholder IDs in `wrangler.jsonc`:
+```jsonc
+"kv_namespaces": [
+  {
+    "binding": "NEXT_CACHE_WORKERS_KV",
+    "id": "abc123...",        // ← Your ID here
+    "preview_id": "xyz789..." // ← Your preview ID here
+  }
+]
+```
 
-Before clicking "Save and Deploy", add your environment variables:
+**Step 4: Set Environment Variables**
 
-Click **Add environment variable** for each:
+Update `wrangler.jsonc` vars section:
+```jsonc
+"vars": {
+  "NEXT_PUBLIC_SUPABASE_URL": "https://your-project.supabase.co",
+  "NEXT_PUBLIC_SUPABASE_ANON_KEY": "your-anon-key"
+}
+```
 
-1. **Variable name:** `NEXT_PUBLIC_SUPABASE_URL`
-   **Value:** `https://your-project-id.supabase.co`
+For secrets (like AWS credentials), use:
+```bash
+wrangler secret put AWS_REGION
+wrangler secret put AWS_ACCESS_KEY_ID
+wrangler secret put AWS_SECRET_ACCESS_KEY
+```
 
-2. **Variable name:** `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   **Value:** `your-anon-key-here`
+**Step 5: Build and Deploy**
 
-3. **Variable name:** `AWS_REGION` (if using Lambda)
-   **Value:** `us-east-1`
+```bash
+# Build for CloudFlare
+yarn cf:build
 
-4. **Variable name:** `AWS_ACCESS_KEY_ID` (if using Lambda)
-   **Value:** `your-access-key`
+# Preview locally
+yarn cf:preview
 
-5. **Variable name:** `AWS_SECRET_ACCESS_KEY` (if using Lambda)
-   **Value:** `your-secret-key`
+# Deploy to production
+yarn cf:deploy
+```
 
-**Important:** Set these for both **Production** and **Preview** environments.
+Your app will be deployed to: `https://alpha-dev-test.YOUR-SUBDOMAIN.workers.dev`
 
-### Step 6: Deploy
+### Method 2: GitHub Integration (Coming Soon)
 
-1. Click **Save and Deploy**
-2. Wait 2-5 minutes for the build to complete
-3. You'll see a success message with your deployment URL
+CloudFlare Pages support for OpenNext is under development. Currently, direct deployment with Wrangler is the recommended approach.
 
-### Step 7: Test Your Deployed Site
+---
 
-1. Click the deployment URL (something like `https://alpha-dev-test.pages.dev`)
+## Testing Your Deployment
+
+Once deployed, test your application:
+
+1. Visit your Worker URL
 2. Test the Word Reverser functionality
-3. Check that it saves to Supabase
+3. Check that reversed text saves to Supabase
 4. Verify the history loads correctly
+5. Test GSAP animations work properly
 
 ---
 

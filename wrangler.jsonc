@@ -1,0 +1,30 @@
+{
+  "name": "alpha-dev-test",
+  "compatibility_date": "2024-12-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": ".open-next/worker.js",
+
+  // KV namespace for incremental caching (optional but recommended)
+  "kv_namespaces": [
+    {
+      "binding": "NEXT_CACHE_WORKERS_KV",
+      "id": "YOUR_KV_NAMESPACE_ID",
+      "preview_id": "YOUR_PREVIEW_KV_NAMESPACE_ID"
+    }
+  ],
+
+  // Environment variables
+  "vars": {
+    "NEXT_PUBLIC_SUPABASE_URL": "",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": ""
+  },
+
+  // Secrets (set via: wrangler secret put <NAME>)
+  // - AWS_REGION
+  // - AWS_ACCESS_KEY_ID
+  // - AWS_SECRET_ACCESS_KEY
+
+  "build": {
+    "command": ""
+  }
+}
