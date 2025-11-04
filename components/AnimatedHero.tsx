@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import styles from './AnimatedHero.module.sass';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import styles from "./AnimatedHero.module.sass";
 
 export default function AnimatedHero() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -17,7 +17,7 @@ export default function AnimatedHero() {
         y: 50,
         opacity: 0,
         duration: 1,
-        ease: 'power3.out',
+        ease: "power3.out",
       })
         .from(
           subtitleRef.current,
@@ -25,16 +25,16 @@ export default function AnimatedHero() {
             y: 30,
             opacity: 0,
             duration: 0.8,
-            ease: 'power3.out',
+            ease: "power3.out",
           },
-          '-=0.5'
+          "-=0.5"
         )
         .from(
           heroRef.current,
           {
             scale: 0.95,
             duration: 1.2,
-            ease: 'power2.out',
+            ease: "power2.out",
           },
           0
         );
@@ -46,10 +46,10 @@ export default function AnimatedHero() {
   return (
     <div ref={heroRef} className={styles.hero}>
       <h1 ref={titleRef} className={styles.title}>
-        Alpha Dev Test
+        Wordsmith Inc
       </h1>
       <p ref={subtitleRef} className={styles.subtitle}>
-        Next.js • GSAP • AWS Lambda • TypeScript
+        The world in reverse
       </p>
     </div>
   );
