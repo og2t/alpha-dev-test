@@ -131,15 +131,6 @@ export default function WordReverser() {
     });
   };
 
-  const handleClear = () => {
-    if (!isAnimating) {
-      setInputText("");
-      if (displayRef.current) {
-        displayRef.current.textContent = "";
-      }
-    }
-  };
-
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     setInputText(newText);
@@ -198,13 +189,6 @@ export default function WordReverser() {
           disabled={isAnimating || !inputText.trim()}
         >
           {isAnimating ? "Animating..." : "Reverse Words"}
-        </button>
-        <button
-          className={styles.buttonSecondary}
-          onClick={handleClear}
-          disabled={isAnimating}
-        >
-          Clear
         </button>
       </div>
 
