@@ -44,8 +44,6 @@
   background-color: #fff
   resize: vertical
   transition: border-color 0.2s ease
-  min-height: 10rem
-  max-height: 10rem
 
   &.hidden
     display: none
@@ -62,7 +60,6 @@
     color: #999
 
 .displayArea
-  padding-bottom: 7.75rem
   white-space: pre-wrap
 
 .display
@@ -78,10 +75,12 @@
   word-break: break-word
   transform-style: preserve-3d
 
+.displayArea
   :global(.word)
     display: inline-block
-    transform-origin: center
-    margin: 0 0.15em
+    transform-origin: center center
+    transform-style: preserve-3d
+    backface-visibility: hidden
 
 .buttonGroup
   display: flex

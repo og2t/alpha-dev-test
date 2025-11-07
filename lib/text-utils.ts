@@ -18,13 +18,11 @@ export const isAlphanumeric = (char: string): boolean => {
  */
 export const reverseWords = (text: string): string => {
   if (!text.trim()) {
-    return '';
+    return "";
   }
 
-  // Split by spaces to preserve spacing
-  const words = text.split(' ');
-
-  const reversedWords = words.map(word => {
+  // Use regex to match each word while preserving all whitespace (spaces, newlines, tabs)
+  return text.replace(/\S+/g, (word) => {
     if (word.length === 0) return word;
 
     // Find where the actual word starts (skip leading punctuation)
@@ -50,11 +48,9 @@ export const reverseWords = (text: string): string => {
     const actualWord = word.substring(startIndex, endIndex + 1);
 
     // Reverse only the alphanumeric part
-    const reversedWord = actualWord.split('').reverse().join('');
+    const reversedWord = actualWord.split("").reverse().join("");
 
     // Reconstruct with punctuation in original positions
     return leadingPunctuation + reversedWord + trailingPunctuation;
   });
-
-  return reversedWords.join(' ');
 };

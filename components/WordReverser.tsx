@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import gsap from "gsap";
-// Note: SplitText is a premium GSAP plugin requiring Club GreenSock membership
-// Install: npm install gsap-trial (for trial) or use your Club GreenSock account
 import { SplitText } from "gsap/SplitText";
 import { reverseWords } from "@/lib/text-utils";
 import styles from "./WordReverser.module.sass";
@@ -14,7 +12,7 @@ if (typeof window !== "undefined") {
 }
 
 export default function WordReverser() {
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState("a1\nb2\nc3");
   const [isAnimating, setIsAnimating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState<{
@@ -59,31 +57,57 @@ export default function WordReverser() {
   const handleReverseWords = () => {
     if (!inputText.trim() || !displayRef.current || isAnimating) return;
 
+    if (textareaRef.current && displayRef.current) {
+      const ta = textareaRef.current;
+      // Use the computed height so padding/border are included
+      const height = ta.getBoundingClientRect().height || ta.scrollHeight;
+      displayRef.current.style.height = `${height}px`;
+      // Mirror overflow and box-sizing to avoid layout differences
+      displayRef.current.style.overflow = ta.style.overflow || "hidden";
+      displayRef.current.style.boxSizing = getComputedStyle(ta).boxSizing;
+    }
+
     setIsAnimating(true);
-    const originalText = inputText;
     const reversedText = reverseWords(inputText);
 
-    // Create a temporary container for animation
-    const container = displayRef.current;
-    container.textContent = inputText;
+    // Set display with <br> tags so SplitText can detect separate lines
+    displayRef.current.innerHTML = inputText
+      .split("\n")
+      .map((line) => line || "&nbsp;")
+      .join("<br>");
 
     // Split the text into words
-    const split = new SplitText(container, {
+    const split = SplitText.create(displayRef.current, {
       type: "words",
       wordsClass: "word",
     });
 
     const words = split.words;
-    const reversedWordsArray = reversedText.split(" ");
+    const reversedWordsArray = reversedText.split(/\s+/);
+
+    // Wrap each word in a perspective container
+    words.forEach((word) => {
+      const wrapper = document.createElement("span");
+      wrapper.style.display = "inline-block";
+      wrapper.style.perspective = "200px";
+      word.parentNode?.insertBefore(wrapper, word);
+      wrapper.appendChild(word);
+    });
 
     // Create timeline for the animation
     const tl = gsap.timeline({
       onComplete: () => {
-        // Update the actual text after animation
-        if (displayRef.current) {
-          displayRef.current.textContent = reversedText;
-        }
+        // Revert the SplitText changes to restore clean DOM
+        split.revert();
+
+        // Update both state and display ref with reversed text
         setInputText(reversedText);
+
+        if (displayRef.current) {
+          // Convert newlines to <br> tags for display
+          displayRef.current.innerHTML = reversedText;
+        }
+
         setIsAnimating(false);
 
         // Save to database after animation completes
@@ -91,19 +115,17 @@ export default function WordReverser() {
       },
     });
 
-    // Animate each word flipping with 0.1s stagger
-    const STAGGER = 0.05;
-    const DURATION = 0.2;
+    const STAGGER = 0.01;
+    const DURATION = 0.5;
 
     words.forEach((word, index) => {
-      const reversedWord = reversedWordsArray[index] ?? "";
-
       // flip out
       tl.to(
         word,
         {
-          rotationY: 75,
+          rotationY: 100,
           duration: DURATION,
+          opacity: 0,
           ease: "power2.in",
         },
         index * STAGGER
@@ -112,6 +134,7 @@ export default function WordReverser() {
       // swap text at midpoint
       tl.call(
         () => {
+          const reversedWord = reversedWordsArray[index] ?? "";
           word.textContent = reversedWord;
         },
         undefined,
@@ -124,6 +147,7 @@ export default function WordReverser() {
         {
           rotationY: 0,
           duration: DURATION,
+          opacity: 1,
           ease: "power2.out",
         },
         index * STAGGER + DURATION
@@ -134,16 +158,7 @@ export default function WordReverser() {
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
     setInputText(newText);
-    if (displayRef.current) {
-      displayRef.current.textContent = newText;
-    }
   };
-
-  useEffect(() => {
-    if (displayRef.current) {
-      displayRef.current.textContent = inputText;
-    }
-  }, []);
 
   return (
     <div className={styles.container}>
@@ -159,6 +174,13 @@ export default function WordReverser() {
           <textarea
             ref={textareaRef}
             id="input-text"
+            onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
+              const ta = textareaRef.current;
+              if (!ta) return;
+              ta.style.height = "auto";
+              ta.style.height = `${ta.scrollHeight}px`;
+            }}
+            style={{ overflow: "hidden", resize: "none" }}
             className={[styles.textarea, isAnimating && styles.hidden].join(
               " "
             )}

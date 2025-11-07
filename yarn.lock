@@ -5301,7 +5301,7 @@ __metadata:
     aws-sdk: "npm:^2.1691.0"
     eslint: "npm:^9"
     eslint-config-next: "npm:^15.1.4"
-    gsap: "npm:^3.12.5"
+    gsap: "npm:^3.13.0"
     jest: "npm:^29"
     jest-environment-jsdom: "npm:^29"
     next: "npm:^15.1.4"
@@ -7756,7 +7756,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gsap@npm:^3.12.5":
+"gsap@npm:^3.13.0":
   version: 3.13.0
   resolution: "gsap@npm:3.13.0"
   checksum: 10c0/a42dd2e02467a4abe96409aaf6cd0e5d697c72e05ec13c18c2271330493983aa63cc717c9dd0740fda2f884d0f56c7b98fc18b13500f0c1da94864985840da7c
