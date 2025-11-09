@@ -115,15 +115,15 @@ export default function WordReverser() {
       },
     });
 
-    const STAGGER = 0.01;
     const DURATION = 0.5;
+    const STAGGER = 0.05;
 
     words.forEach((word, index) => {
       // flip out
       tl.to(
         word,
         {
-          rotationY: 100,
+          rotationY: 90,
           duration: DURATION,
           opacity: 0,
           ease: "power2.in",
@@ -136,6 +136,7 @@ export default function WordReverser() {
         () => {
           const reversedWord = reversedWordsArray[index] ?? "";
           word.textContent = reversedWord;
+          gsap.set(word, { rotationY: -90 });
         },
         undefined,
         index * STAGGER + DURATION
