@@ -8,17 +8,23 @@ export interface ReversedText {
   created_at: string;
 }
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       reversed_texts: {
         Row: ReversedText;
-        Insert: Omit<ReversedText, 'id' | 'created_at'>;
-        Update: Partial<Omit<ReversedText, 'id' | 'created_at'>>;
+        Insert: {
+          original_text: string;
+          reversed_text: string;
+        };
+        Update: {
+          original_text?: string;
+          reversed_text?: string;
+        };
       };
     };
   };
-}
+};
 
 // Create a single supabase client for interacting with your database
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
