@@ -1,11 +1,24 @@
-const config = {
+export default {
   default: {
     override: {
       wrapper: 'cloudflare-node',
       converter: 'edge',
-      incrementalCache: 'cloudflare-kv',
+      incrementalCache: 'dummy',
+      tagCache: 'dummy',
+      queue: 'dummy',
     },
   },
-};
 
-export default config;
+  middleware: {
+    external: true,
+    override: {
+      wrapper: 'cloudflare-edge',
+      converter: 'edge',
+      proxyExternalRequest: 'fetch',
+    },
+  },
+
+  dangerous: {
+    enableCacheInterception: false,
+  },
+};
