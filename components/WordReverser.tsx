@@ -181,7 +181,9 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Word Reverser Tool</h2>
-      <p className={styles.description}>Enter the text to be reversed.</p>
+      <p className={styles.description}>
+        Enter or paste the text to be reversed.
+      </p>
 
       <div className={styles.displayGroup}>
         <div className={styles.inputGroup}>
@@ -219,23 +221,19 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
         </div>
       </div>
 
-      <div className={styles.buttonGroup}>
-        <button
-          className={styles.button}
-          onClick={handleReverseWords}
-          disabled={isAnimating || !inputText.trim()}
-        >
-          {isAnimating ? "Reversing..." : "Reverse Words"}
-        </button>
-      </div>
+      <button
+        className={styles.button}
+        onClick={handleReverseWords}
+        disabled={isAnimating || isSaving || !inputText.trim()}
+      >
+        {isAnimating ? "Reversing..." : "Reverse Words"}
+      </button>
 
       {saveMessage && (
         <div className={`${styles.saveMessage} ${styles[saveMessage.type]}`}>
           {saveMessage.text}
         </div>
       )}
-
-      {isSaving && <div className={styles.saveMessage}>Saving...</div>}
     </div>
   );
 }

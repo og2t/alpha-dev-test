@@ -86,7 +86,7 @@ export default function ReversedTextHistory({
       <div className={styles.container}>
         <h2 className={styles.title}>Recent Reversals</h2>
         <p className={styles.empty}>
-          No reversed texts yet. Try reversing some text above!
+          No reversed texts yet. Try reversing some text above.
         </p>
       </div>
     );
