@@ -68,41 +68,24 @@ export default function ReversedTextHistory({
     }
   }, [refreshTrigger, fetchTexts]);
 
-  if (loading) {
-    return (
-      <div className={styles.container}>
-        <h2 className={styles.title}>Recent Reversals</h2>
-        <div className={styles.loading}>Loading...</div>
-      </div>
-    );
-  }
+  const renderContent = () => {
+    if (loading) {
+      return <div className={styles.loading}>Loading...</div>;
+    }
 
-  if (error) {
-    return (
-      <div className={styles.container}>
-        <h2 className={styles.title}>Recent Reversals</h2>
-        <div className={styles.error}>{error}</div>
-      </div>
-    );
-  }
+    if (error) {
+      return <div className={styles.error}>{error}</div>;
+    }
 
-  if (texts.length === 0) {
-    return (
-      <div className={styles.container}>
-        <h2 className={styles.title}>Recent Reversals</h2>
+    if (texts.length === 0) {
+      return (
         <p className={styles.empty}>
           No reversed texts yet. Try reversing some text above.
         </p>
-      </div>
-    );
-  }
+      );
+    }
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h2 className={styles.title}>Recent Reversals</h2>
-      </div>
-
+    return (
       <div className={styles.list}>
         {texts.map((text) => (
           <div key={text.id} className={styles.item}>
@@ -129,6 +112,15 @@ export default function ReversedTextHistory({
           </div>
         ))}
       </div>
+    );
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h4 className={styles.title}>Recent Reversals</h4>
+      </div>
+      {renderContent()}
     </div>
   );
 }
