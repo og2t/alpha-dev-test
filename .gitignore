@@ -9,8 +9,10 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-
+ 
 # testing
+/playwright-report
+/test-results
 /coverage
 
 # next.js
