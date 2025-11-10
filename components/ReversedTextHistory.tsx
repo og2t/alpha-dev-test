@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ReversedText } from "@/lib/supabase";
 import styles from "./ReversedTextHistory.module.sass";
 
@@ -16,7 +16,7 @@ export default function ReversedTextHistory({
   const [error, setError] = useState<string | null>(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-  const fetchTexts = async () => {
+  const fetchTexts = useCallback(async () => {
     // Only show loading state on initial load to prevent flicker
     if (isInitialLoad) {
       setLoading(true);
@@ -39,7 +39,7 @@ export default function ReversedTextHistory({
       setLoading(false);
       setIsInitialLoad(false);
     }
-  };
+  }, [isInitialLoad]);
 
   const handleDelete = async (id: string) => {
     try {
@@ -59,14 +59,14 @@ export default function ReversedTextHistory({
 
   useEffect(() => {
     fetchTexts();
-  }, []);
+  }, [fetchTexts]);
 
   // Refetch when refreshTrigger changes
   useEffect(() => {
     if (refreshTrigger !== undefined && refreshTrigger > 0) {
       fetchTexts();
     }
-  }, [refreshTrigger]);
+  }, [refreshTrigger, fetchTexts]);
 
   if (loading) {
     return (
