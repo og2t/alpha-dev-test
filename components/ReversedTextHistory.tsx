@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { ReversedText } from "@/lib/supabase";
 import styles from "./ReversedTextHistory.module.sass";
 
-export default function ReversedTextHistory() {
+interface ReversedTextHistoryProps {
+  refreshTrigger?: number;
+}
+
+export default function ReversedTextHistory({ refreshTrigger }: ReversedTextHistoryProps) {
   const [texts, setTexts] = useState<ReversedText[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -49,6 +53,13 @@ export default function ReversedTextHistory() {
   useEffect(() => {
     fetchTexts();
   }, []);
+
+  // Refetch when refreshTrigger changes
+  useEffect(() => {
+    if (refreshTrigger !== undefined && refreshTrigger > 0) {
+      fetchTexts();
+    }
+  }, [refreshTrigger]);
 
   if (loading) {
     return (

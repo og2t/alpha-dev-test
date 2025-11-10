@@ -11,7 +11,11 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(SplitText);
 }
 
-export default function WordReverser() {
+interface WordReverserProps {
+  onReversalSaved?: () => void;
+}
+
+export default function WordReverser({ onReversalSaved }: WordReverserProps) {
   const [inputText, setInputText] = useState(
     "The red fox crosses the ice, intent on none of my business."
   );
@@ -45,6 +49,8 @@ export default function WordReverser() {
       if (data.success) {
         setSaveMessage({ type: "success", text: "Saved to database!" });
         setTimeout(() => setSaveMessage(null), 3000);
+        // Notify parent component that a new reversal was saved
+        onReversalSaved?.();
       } else {
         setSaveMessage({ type: "error", text: "Failed to save" });
       }
