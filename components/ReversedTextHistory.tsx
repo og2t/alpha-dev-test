@@ -14,9 +14,13 @@ export default function ReversedTextHistory({
   const [texts, setTexts] = useState<ReversedText[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const fetchTexts = async () => {
-    setLoading(true);
+    // Only show loading state on initial load to prevent flicker
+    if (isInitialLoad) {
+      setLoading(true);
+    }
     setError(null);
 
     try {
@@ -33,6 +37,7 @@ export default function ReversedTextHistory({
       setError("Failed to load history");
     } finally {
       setLoading(false);
+      setIsInitialLoad(false);
     }
   };
 
