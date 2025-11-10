@@ -97,6 +97,7 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
     const split = SplitText.create(displayRef.current, {
       type: "words",
       wordsClass: "word",
+      reduceWhiteSpace: false,
     });
 
     const words = split.words;
