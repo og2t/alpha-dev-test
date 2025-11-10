@@ -77,18 +77,17 @@ test.describe('Word Reverser', () => {
     await textarea.clear();
     await textarea.fill('test text');
 
-    // Start the click but don't await it fully
-    const clickPromise = reverseButton.click();
+    // Click button
+    await reverseButton.click();
 
-    // Button should be disabled almost immediately
-    await page.waitForTimeout(100); // Small wait to let state update
-    await expect(reverseButton).toBeDisabled();
+    // Wait for button text to change to "Reversing..." (proves it's in progress)
+    await expect(page.locator('button').filter({ hasText: 'Reversing...' })).toBeVisible();
 
-    // Wait for the click to complete
-    await clickPromise;
+    // At this point button should be disabled
+    await expect(page.locator('button').filter({ hasText: 'Reversing...' })).toBeDisabled();
 
-    // Wait for animation to complete
-    await page.waitForTimeout(2000);
+    // Wait for operation to complete (button text returns to normal)
+    await expect(reverseButton).toBeVisible();
 
     // Button should be enabled again
     await expect(reverseButton).toBeEnabled();
