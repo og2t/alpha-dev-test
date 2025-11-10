@@ -7,12 +7,8 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <AnimatedHero />
-      <section className={styles.demoSection}>
-        <WordReverser />
-      </section>
-      <section className={styles.demoSection}>
-        <ReversedTextHistory />
-      </section>
+      <WordReverser />
+      <ReversedTextHistory />
     </main>
   );
 }

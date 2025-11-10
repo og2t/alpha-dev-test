@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { ReversedText } from '@/lib/supabase';
-import styles from './ReversedTextHistory.module.sass';
+import { useEffect, useState } from "react";
+import { ReversedText } from "@/lib/supabase";
+import styles from "./ReversedTextHistory.module.sass";
 
 export default function ReversedTextHistory() {
   const [texts, setTexts] = useState<ReversedText[]>([]);
@@ -14,17 +14,17 @@ export default function ReversedTextHistory() {
     setError(null);
 
     try {
-      const response = await fetch('/api/reversed-texts?limit=20');
+      const response = await fetch("/api/reversed-texts?limit=20");
       const data = await response.json();
 
       if (data.success) {
         setTexts(data.data);
       } else {
-        setError('Failed to load history');
+        setError("Failed to load history");
       }
     } catch (err) {
-      console.error('Error fetching texts:', err);
-      setError('Failed to load history');
+      console.error("Error fetching texts:", err);
+      setError("Failed to load history");
     } finally {
       setLoading(false);
     }
@@ -33,16 +33,16 @@ export default function ReversedTextHistory() {
   const handleDelete = async (id: string) => {
     try {
       const response = await fetch(`/api/reversed-texts/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       const data = await response.json();
 
       if (data.success) {
-        setTexts(texts.filter(text => text.id !== id));
+        setTexts(texts.filter((text) => text.id !== id));
       }
     } catch (err) {
-      console.error('Error deleting text:', err);
+      console.error("Error deleting text:", err);
     }
   };
 
@@ -72,7 +72,9 @@ export default function ReversedTextHistory() {
     return (
       <div className={styles.container}>
         <h2 className={styles.title}>Recent Reversals</h2>
-        <p className={styles.empty}>No reversed texts yet. Try reversing some text above!</p>
+        <p className={styles.empty}>
+          No reversed texts yet. Try reversing some text above!
+        </p>
       </div>
     );
   }

@@ -12,7 +12,9 @@ if (typeof window !== "undefined") {
 }
 
 export default function WordReverser() {
-  const [inputText, setInputText] = useState("a1\nb2\nc3");
+  const [inputText, setInputText] = useState(
+    "The red fox crosses the ice, intent on none of my business."
+  );
   const [isAnimating, setIsAnimating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState<{
@@ -80,6 +82,10 @@ export default function WordReverser() {
     const split = SplitText.create(displayRef.current, {
       type: "words",
       wordsClass: "word",
+      // wordDelimiter: {
+      //   delimiter: /\s+/,
+      //   replaceWith: String.fromCharCode(0x2006),
+      // },
     });
 
     const words = split.words;
@@ -104,14 +110,13 @@ export default function WordReverser() {
         setInputText(reversedText);
 
         if (displayRef.current) {
-          // Convert newlines to <br> tags for display
           displayRef.current.innerHTML = reversedText;
         }
 
         setIsAnimating(false);
 
         // Save to database after animation completes
-        // saveToDatabase(originalText, reversedText);
+        saveToDatabase(inputText, reversedText);
       },
     });
 
@@ -163,11 +168,8 @@ export default function WordReverser() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Word Reverser</h2>
-      <p className={styles.description}>
-        Enter text below and click "Reverse Words" to see an animated word
-        reversal effect using GSAP SplitText.
-      </p>
+      <h2 className={styles.title}>Word Reverser Tool</h2>
+      <p className={styles.description}>Enter the text to be reversed.</p>
 
       <div className={styles.displayGroup}>
         <div className={styles.inputGroup}>
@@ -187,7 +189,7 @@ export default function WordReverser() {
             )}
             value={inputText}
             onChange={handleTextChange}
-            placeholder="The red fox crosses the ice, intent on none of my business."
+            placeholder=""
             rows={5}
             disabled={isAnimating}
           />
@@ -211,7 +213,7 @@ export default function WordReverser() {
           onClick={handleReverseWords}
           disabled={isAnimating || !inputText.trim()}
         >
-          {isAnimating ? "Animating..." : "Reverse Words"}
+          {isAnimating ? "Reversing..." : "Reverse Words"}
         </button>
       </div>
 
