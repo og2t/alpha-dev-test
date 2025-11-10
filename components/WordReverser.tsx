@@ -97,10 +97,6 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
     const split = SplitText.create(displayRef.current, {
       type: "words",
       wordsClass: "word",
-      // wordDelimiter: {
-      //   delimiter: /\s+/,
-      //   replaceWith: String.fromCharCode(0x2006),
-      // },
     });
 
     const words = split.words;
