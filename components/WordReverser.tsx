@@ -14,6 +14,8 @@ interface WordReverserProps {
   onReversalSaved?: () => void;
 }
 
+const MAX_CHARS = 5000;
+
 export default function WordReverser({ onReversalSaved }: WordReverserProps) {
   const [inputText, setInputText] = useState(
     "The red fox crosses the ice, intent on none of my business."
@@ -129,7 +131,8 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
     });
 
     const DURATION = 0.5;
-    const STAGGER = 0.05;
+    // Make stagger relative to number of words - longer texts animate faster
+    const STAGGER = Math.max(0.01, Math.min(0.1, 3 / words.length));
 
     words.forEach((word, index) => {
       // flip out
@@ -171,7 +174,11 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
-    setInputText(newText);
+
+    // Enforce character limit
+    if (newText.length <= MAX_CHARS) {
+      setInputText(newText);
+    }
   };
 
   return (
@@ -202,7 +209,15 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
             placeholder=""
             rows={5}
             disabled={isAnimating}
+            maxLength={MAX_CHARS}
           />
+          <div
+            className={`${styles.charCounter} ${
+              inputText.length >= MAX_CHARS ? styles.charCounterLimit : ""
+            }`}
+          >
+            {inputText.length} / {MAX_CHARS} characters
+          </div>
         </div>
 
         <div

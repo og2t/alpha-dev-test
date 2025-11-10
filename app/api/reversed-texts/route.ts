@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { originalText } = body;
+    const MAX_CHARS = 5000;
 
     if (!originalText || typeof originalText !== 'string') {
       return NextResponse.json(
@@ -40,6 +41,13 @@ export async function POST(request: NextRequest) {
     if (!originalText.trim()) {
       return NextResponse.json(
         { success: false, error: 'originalText cannot be empty' },
+        { status: 400 }
+      );
+    }
+
+    if (originalText.length > MAX_CHARS) {
+      return NextResponse.json(
+        { success: false, error: `originalText cannot exceed ${MAX_CHARS} characters` },
         { status: 400 }
       );
     }
