@@ -49,8 +49,6 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
       const data = await response.json();
 
       if (data.success) {
-        // Notify parent component that a new reversal was saved
-        onReversalSaved?.();
         return data.reversedText;
       } else {
         setSaveMessage({ type: "error", text: data.error || "Failed to save" });
@@ -127,6 +125,9 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
         }
 
         setIsAnimating(false);
+
+        // Notify parent component that a new reversal was saved (after animation completes)
+        onReversalSaved?.();
       },
     });
 
