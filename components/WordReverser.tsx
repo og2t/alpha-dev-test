@@ -189,47 +189,41 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
       </p>
 
       <div className={styles.displayGroup}>
-        <div className={styles.inputGroup}>
-          <label htmlFor="input-text" className={styles.label}></label>
-          <textarea
-            ref={textareaRef}
-            id="input-text"
-            onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
-              const ta = textareaRef.current;
-              if (!ta) return;
-              ta.style.height = "auto";
-              ta.style.height = `${ta.scrollHeight}px`;
-            }}
-            style={{ overflow: "hidden", resize: "none" }}
-            className={[styles.textarea, isAnimating && styles.hidden].join(
-              " "
-            )}
-            value={inputText}
-            onChange={handleTextChange}
-            placeholder=""
-            rows={5}
-            disabled={isAnimating}
-            maxLength={MAX_CHARS}
-          />
-          <div
-            className={`${styles.charCounter} ${
-              inputText.length >= MAX_CHARS ? styles.charCounterLimit : ""
-            }`}
-          >
-            {inputText.length} / {MAX_CHARS} characters
-          </div>
-        </div>
+        <textarea
+          ref={textareaRef}
+          className={[styles.textarea, isAnimating && styles.hidden].join(" ")}
+          id="input-text"
+          onInput={(e: React.FormEvent<HTMLTextAreaElement>) => {
+            const ta = textareaRef.current;
+            if (!ta) return;
+            ta.style.height = "auto";
+            ta.style.height = `${ta.scrollHeight}px`;
+          }}
+          style={{ overflow: "hidden", resize: "none" }}
+          value={inputText}
+          onChange={handleTextChange}
+          placeholder=""
+          rows={5}
+          disabled={isAnimating}
+          maxLength={MAX_CHARS}
+        />
 
         <div
           ref={displayRef}
-          className={[
-            styles.textarea,
-            styles.displayArea,
-            !isAnimating && styles.hidden,
-          ].join(" ")}
+          className={[styles.displayArea, !isAnimating && styles.hidden].join(
+            " "
+          )}
         >
           {inputText}
         </div>
+      </div>
+
+      <div
+        className={`${styles.charCounter} ${
+          inputText.length >= MAX_CHARS ? styles.charCounterLimit : ""
+        }`}
+      >
+        {inputText.length} / {MAX_CHARS} characters
       </div>
 
       <button
