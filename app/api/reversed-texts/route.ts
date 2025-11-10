@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { saveReversedText, getRecentReversedTexts } from '@/lib/supabase';
+import { reverseWords } from '@/lib/text-utils';
 
 // GET - Fetch recent reversed texts
 export async function GET(request: NextRequest) {
@@ -23,19 +24,30 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST - Save a new reversed text
+// POST - Reverse text and save to database
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { originalText, reversedText } = body;
+    const { originalText } = body;
 
-    if (!originalText || !reversedText) {
+    if (!originalText || typeof originalText !== 'string') {
       return NextResponse.json(
-        { success: false, error: 'originalText and reversedText are required' },
+        { success: false, error: 'originalText is required and must be a string' },
         { status: 400 }
       );
     }
 
+    if (!originalText.trim()) {
+      return NextResponse.json(
+        { success: false, error: 'originalText cannot be empty' },
+        { status: 400 }
+      );
+    }
+
+    // Perform word reversal on server
+    const reversedText = reverseWords(originalText);
+
+    // Save to database
     const savedText = await saveReversedText(originalText, reversedText);
 
     if (!savedText) {
@@ -48,6 +60,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: savedText,
+      reversedText: reversedText, // Return reversed text for client animation
     });
   } catch (error) {
     console.error('Error saving reversed text:', error);

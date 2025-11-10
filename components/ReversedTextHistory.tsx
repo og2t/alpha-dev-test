@@ -8,7 +8,9 @@ interface ReversedTextHistoryProps {
   refreshTrigger?: number;
 }
 
-export default function ReversedTextHistory({ refreshTrigger }: ReversedTextHistoryProps) {
+export default function ReversedTextHistory({
+  refreshTrigger,
+}: ReversedTextHistoryProps) {
   const [texts, setTexts] = useState<ReversedText[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -94,9 +96,6 @@ export default function ReversedTextHistory({ refreshTrigger }: ReversedTextHist
     <div className={styles.container}>
       <div className={styles.header}>
         <h2 className={styles.title}>Recent Reversals</h2>
-        <button className={styles.refreshButton} onClick={fetchTexts}>
-          Refresh
-        </button>
       </div>
 
       <div className={styles.list}>

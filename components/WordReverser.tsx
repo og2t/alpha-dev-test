@@ -3,7 +3,6 @@
 import { useState, useRef } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
-import { reverseWords } from "@/lib/text-utils";
 import styles from "./WordReverser.module.sass";
 
 // Register the plugin
@@ -28,7 +27,9 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
   const displayRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const saveToDatabase = async (original: string, reversed: string) => {
+  const reverseAndSave = async (
+    originalText: string
+  ): Promise<string | null> => {
     setIsSaving(true);
     setSaveMessage(null);
 
@@ -39,30 +40,30 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          originalText: original,
-          reversedText: reversed,
+          originalText: originalText,
         }),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        setSaveMessage({ type: "success", text: "Saved to database!" });
-        setTimeout(() => setSaveMessage(null), 3000);
         // Notify parent component that a new reversal was saved
         onReversalSaved?.();
+        return data.reversedText;
       } else {
-        setSaveMessage({ type: "error", text: "Failed to save" });
+        setSaveMessage({ type: "error", text: data.error || "Failed to save" });
+        return null;
       }
     } catch (error) {
       console.error("Error saving:", error);
       setSaveMessage({ type: "error", text: "Failed to save" });
+      return null;
     } finally {
       setIsSaving(false);
     }
   };
 
-  const handleReverseWords = () => {
+  const handleReverseWords = async () => {
     if (!inputText.trim() || !displayRef.current || isAnimating) return;
 
     if (textareaRef.current && displayRef.current) {
@@ -76,7 +77,15 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
     }
 
     setIsAnimating(true);
-    const reversedText = reverseWords(inputText);
+
+    // Get reversed text from server
+    const reversedText = await reverseAndSave(inputText);
+
+    if (!reversedText) {
+      // Failed to reverse/save, stop animation
+      setIsAnimating(false);
+      return;
+    }
 
     // Set display with <br> tags so SplitText can detect separate lines
     displayRef.current.innerHTML = inputText
@@ -120,9 +129,6 @@ export default function WordReverser({ onReversalSaved }: WordReverserProps) {
         }
 
         setIsAnimating(false);
-
-        // Save to database after animation completes
-        saveToDatabase(inputText, reversedText);
       },
     });
 
