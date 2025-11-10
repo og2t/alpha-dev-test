@@ -150,22 +150,6 @@ The project uses SASS (indent-based syntax) for styling. You can use:
 - **Global styles**: `globals.sass` for app-wide styles
 - **Variables, mixins, nesting**: All SASS features are supported
 
-Example:
-
-```sass
-// styles.module.sass
-$primary-color: #667eea
-
-.container
-  background: $primary-color
-
-  .title
-    font-size: 2rem
-
-    &:hover
-      opacity: 0.8
-```
-
 ## Scripts
 
 - `npm run dev` - Start development server
@@ -175,16 +159,3 @@ $primary-color: #667eea
 - `npm run pages:build` - Build for CloudFlare Pages
 - `npm run pages:deploy` - Deploy to CloudFlare Pages
 - `npm run pages:dev` - Development with CloudFlare Pages
-
-## Learn More
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [GSAP Documentation](https://greensock.com/docs/)
-- [AWS Lambda Documentation](https://docs.aws.amazon.com/lambda/)
-- [CloudFlare Pages](https://developers.cloudflare.com/pages/)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
-- [SASS Documentation](https://sass-lang.com/documentation/)
-
-## License
-
-MIT
