@@ -46,7 +46,6 @@ The Playwright configuration is located in `playwright.config.ts` at the project
 
 Key settings:
 
-- Base URL: http://localhost:3001
 - Browser: Chromium (Desktop Chrome)
 - Retries: 2 on CI, 0 locally
 - Timeout: 120 seconds for web server startup
