@@ -1,6 +1,6 @@
 # Alpha Dev Test
 
-A modern Next.js scaffold with server components, GSAP animations, Supabase database, AWS Lambda integration, and CloudFlare deployment support.
+A modern Next.js scaffold with server components, GSAP animations, Supabase database and CloudFlare deployment support.
 
 ## Tech Stack
 
@@ -9,7 +9,6 @@ A modern Next.js scaffold with server components, GSAP animations, Supabase data
 - **GSAP + SplitText** - Professional-grade animation library with text animations
 - **SASS** - CSS preprocessor for advanced styling (indent-based syntax)
 - **Supabase** - PostgreSQL database with real-time capabilities
-- **AWS Lambda** - Serverless function integration (optional)
 - **CloudFlare Pages** - Deployment platform
 - **Jest** - Testing framework with comprehensive test coverage
 
@@ -18,40 +17,6 @@ A modern Next.js scaffold with server components, GSAP animations, Supabase data
 - 📖 **[Deployment Guide](./DEPLOYMENT.md)** - Complete setup and deployment instructions
 - 🗄️ **[Database Schema](./supabase/schema.sql)** - Supabase table definitions
 
-## Project Structure
-
-```
-alpha-dev-test/
-├── app/                      # Next.js App Router directory
-│   ├── api/                 # API routes
-│   │   ├── lambda/         # Lambda invocation endpoint
-│   │   └── reversed-texts/ # Supabase CRUD endpoints
-│   ├── layout.tsx          # Root layout with global styles
-│   ├── page.tsx            # Home page
-│   ├── page.module.sass    # Home page styles
-│   └── globals.sass        # Global styles
-├── components/              # React components
-│   ├── AnimatedHero.tsx           # GSAP animated hero component
-│   ├── WordReverser.tsx           # Text reversal with animations
-│   ├── ReversedTextHistory.tsx    # History display component
-│   └── *.module.sass              # Component styles
-├── hooks/                   # Custom React hooks
-│   └── useLambda.ts        # Hook for Lambda invocations
-├── lib/                     # Utility libraries
-│   ├── aws-lambda.ts       # AWS Lambda integration utilities
-│   ├── supabase.ts         # Supabase client and helpers
-│   ├── text-utils.ts       # Text manipulation functions
-│   └── text-utils.test.ts  # Jest tests
-├── supabase/                # Supabase configuration
-│   └── schema.sql          # Database schema
-├── next.config.ts          # Next.js configuration
-├── jest.config.ts          # Jest configuration
-├── tsconfig.json           # TypeScript configuration
-├── wrangler.toml           # CloudFlare deployment config
-├── DEPLOYMENT.md           # Deployment guide
-└── package.json            # Dependencies and scripts
-```
-
 ## Getting Started
 
 ### Prerequisites
@@ -59,7 +24,6 @@ alpha-dev-test/
 - Node.js 18+ installed
 - npm or yarn package manager
 - Supabase account (free tier available)
-- AWS account (optional, for Lambda integration)
 - CloudFlare account (for deployment)
 
 ### Installation
@@ -82,11 +46,6 @@ Edit `.env` and add your credentials:
 # Supabase (required)
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-# AWS (optional)
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=your_access_key_here
-AWS_SECRET_ACCESS_KEY=your_secret_key_here
 ```
 
 **📖 See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed setup instructions**
@@ -130,7 +89,6 @@ Set your environment variables in the CloudFlare dashboard:
 
 1. Go to your Pages project
 2. Navigate to Settings > Environment variables
-3. Add your AWS credentials and other secrets
 
 ### Automatic Deployment
 

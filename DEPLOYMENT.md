@@ -87,11 +87,13 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 For the word flip animation to work, you need GSAP's SplitText plugin:
 
 **Option 1: Trial version**
+
 ```bash
 npm install gsap-trial
 ```
 
 **Option 2: Club GreenSock membership**
+
 - Download SplitText from your Club GreenSock account
 - Follow installation instructions for npm private registry
 
@@ -142,6 +144,7 @@ wrangler kv namespace create NEXT_CACHE_WORKERS_KV --preview
 ```
 
 This will output IDs like:
+
 ```
 { binding = "NEXT_CACHE_WORKERS_KV", id = "abc123..." }
 { binding = "NEXT_CACHE_WORKERS_KV", preview_id = "xyz789..." }
@@ -150,6 +153,7 @@ This will output IDs like:
 **Step 3: Update wrangler.jsonc**
 
 Replace the placeholder IDs in `wrangler.jsonc`:
+
 ```jsonc
 "kv_namespaces": [
   {
@@ -163,18 +167,12 @@ Replace the placeholder IDs in `wrangler.jsonc`:
 **Step 4: Set Environment Variables**
 
 Update `wrangler.jsonc` vars section:
+
 ```jsonc
 "vars": {
   "NEXT_PUBLIC_SUPABASE_URL": "https://your-project.supabase.co",
   "NEXT_PUBLIC_SUPABASE_ANON_KEY": "your-anon-key"
 }
-```
-
-For secrets (like AWS credentials), use:
-```bash
-wrangler secret put AWS_REGION
-wrangler secret put AWS_ACCESS_KEY_ID
-wrangler secret put AWS_SECRET_ACCESS_KEY
 ```
 
 **Step 5: Build and Deploy**
@@ -214,18 +212,10 @@ Once deployed, test your application:
 
 ### Required for Supabase
 
-| Variable | Description | Where to find |
-|----------|-------------|---------------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL | Project Settings → API |
+| Variable                        | Description                 | Where to find          |
+| ------------------------------- | --------------------------- | ---------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Your Supabase project URL   | Project Settings → API |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase anonymous key | Project Settings → API |
-
-### Required for AWS Lambda (Optional)
-
-| Variable | Description | Where to find |
-|----------|-------------|---------------|
-| `AWS_REGION` | AWS region | Your AWS console |
-| `AWS_ACCESS_KEY_ID` | AWS access key | IAM → Users |
-| `AWS_SECRET_ACCESS_KEY` | AWS secret key | IAM → Users |
 
 ---
 
@@ -234,6 +224,7 @@ Once deployed, test your application:
 ### "Failed to save" message
 
 **Check:**
+
 1. Environment variables are set correctly in CloudFlare
 2. Supabase URL and key are correct
 3. Database table exists (run `schema.sql` again if needed)
@@ -242,6 +233,7 @@ Once deployed, test your application:
 ### "Failed to load history" message
 
 **Check:**
+
 1. API routes are working: visit `https://your-site.com/api/reversed-texts`
 2. Should return JSON with `success: true` and an array
 3. Check browser console for errors
@@ -250,6 +242,7 @@ Once deployed, test your application:
 ### Build fails on CloudFlare
 
 **Common issues:**
+
 1. Wrong build command - should be `npx @cloudflare/next-on-pages`
 2. Wrong output directory - should be `.vercel/output/static`
 3. Missing dependencies - check `package.json`
@@ -258,6 +251,7 @@ Once deployed, test your application:
 ### GSAP SplitText not working
 
 **Solutions:**
+
 1. Install trial version: `npm install gsap-trial`
 2. Or purchase Club GreenSock membership
 3. Check browser console for import errors
@@ -283,6 +277,7 @@ You can watch the build progress in CloudFlare Pages dashboard.
 ## Cost Estimate
 
 ### Supabase Free Tier
+
 - ✅ 500 MB database
 - ✅ 2 GB bandwidth
 - ✅ 50,000 monthly active users
@@ -291,6 +286,7 @@ You can watch the build progress in CloudFlare Pages dashboard.
 **Perfect for this project!**
 
 ### CloudFlare Pages Free Tier
+
 - ✅ Unlimited sites
 - ✅ Unlimited requests
 - ✅ 500 builds per month
